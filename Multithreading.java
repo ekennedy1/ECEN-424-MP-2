@@ -20,14 +20,21 @@ public class Multithreading extends Thread {
         try{ 
             System.out.println("Client Connected to port " + portNumber + " from thread number " + threadNumber);
 
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+            PrintWriter pr = new PrintWriter(connectionSocket.getOutputStream());
+            pr.println("Please enter a string, e.g. 'Hello World', and a positive integer.");
+            pr.flush();
 
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
             clientSentence = inFromClient.readLine();
             System.out.println("Client: " + clientSentence);
+
+            String strParts[] = clientSentence.split(" ");
+
+            connectionSocket.close();
         }
         catch(IOException ie){
-           
+            
         }
-
+        
     }
 }
