@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.*;
 
 
-public class Client {
+public class ClientB {
     
 
     public static void main(String argv[]) throws Exception{
@@ -70,12 +70,16 @@ public class Client {
 
                     }while(stop2);
 
+                    String bufferTX = "";
+
                     for(int i = 0; i < txN; i++){
                         BufferedReader inFromServer2 = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
                         serverSentence = inFromServer2.readLine();
-                        System.out.print(serverSentence);
+                        bufferTX = bufferTX + serverSentence;
 
                     }
+
+                    System.out.print(bufferTX);
          
 
                     connectionSocket.close();

@@ -14,6 +14,18 @@ public class Multithreading extends Thread {
         this.portNumber = portNumber;
     }
 
+    public static void wait(int ms){
+
+        try{
+            Thread.sleep(ms);
+        }
+
+        catch(InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
+
+    }
+
     public void run() {
         String clientSentence;
 
@@ -29,6 +41,20 @@ public class Multithreading extends Thread {
             System.out.println("Client: " + clientSentence);
 
             String strParts[] = clientSentence.split(" ");
+
+            int txN = Integer.parseInt(strParts[1]);
+
+            for(int i = 1; i < txN; i++){
+                PrintWriter pr2 = new PrintWriter(connectionSocket.getOutputStream());
+                pr2.println(strParts[0]);
+                pr2.flush();
+
+                wait(1000);
+            }
+
+            PrintWriter pr2 = new PrintWriter(connectionSocket.getOutputStream());
+            pr2.println(strParts[0] + "\n");
+            pr2.flush();
 
             connectionSocket.close();
         }
